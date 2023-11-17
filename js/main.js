@@ -4,11 +4,14 @@ const menuHamIcon = document.querySelector('.menu');
 const mobileMenu = document.querySelector('.mobile-menu');
 const menuCarritoIcon = document.querySelector('.navbar-shopping-cart');
 const shoppingCartContainer = document.querySelector('#shoppingCartContainer');
+const openProductDetailContainer = document.querySelector('#productDetail');
+const productDetailCloseIcon = document.querySelector('.product-detail-close');
 const cardsContainer = document.querySelector('.cards-container');
 
 menuEmail.addEventListener('click', toggleDesktopMenu);
 menuHamIcon.addEventListener('click', toggleMobileMenu);
 menuCarritoIcon.addEventListener('click', toggleCarritoAside);
+productDetailCloseIcon.addEventListener('click', closeProductDetailAside);
 
 function toggleDesktopMenu() {
 
@@ -29,6 +32,8 @@ function toggleMobileMenu() {
         shoppingCartContainer.classList.add('inactive');
     }
 
+    closeProductDetailAside();
+
     mobileMenu.classList.toggle('inactive');
 }
 
@@ -36,6 +41,7 @@ function toggleCarritoAside() {
 
     const isMobileMenuClosed = mobileMenu.classList.contains('inactive');
     const isDesktopMenuClosed = desktopMenu.classList.contains('inactive');
+    const isProductDetailClosed = openProductDetailContainer.classList.contains('inactive');
 
     if (!isMobileMenuClosed) {
         mobileMenu.classList.add('inactive');
@@ -45,7 +51,22 @@ function toggleCarritoAside() {
         desktopMenu.classList.add('inactive');
     }
 
+    if(!isProductDetailClosed){
+        openProductDetailContainer.classList.add('inactive');
+    }
+
     shoppingCartContainer.classList.toggle('inactive');
+}
+
+function openProductDetailAside() {
+
+    shoppingCartContainer.classList.add('inactive');
+
+    openProductDetailContainer.classList.remove('inactive');
+}
+
+function closeProductDetailAside(){
+    openProductDetailContainer.classList.add('inactive');
 }
 
 const productList = [];
@@ -68,13 +89,14 @@ productList.push({
     image: 'https://images.pexels.com/photos/19012034/pexels-photo-19012034/free-photo-of-ordenador-portatil-tecnologia-ordenador-moderno.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
 });
 
-for(let product of productList){
+for (let product of productList) {
 
     const productCard = document.createElement('div');
     productCard.classList.add('product-card');
 
     const productImg = document.createElement('img');
     productImg.setAttribute('src', product.image);
+    productImg.addEventListener('click', openProductDetailAside);
 
     const productInfo = document.createElement('div');
     productInfo.classList.add('product-info');
